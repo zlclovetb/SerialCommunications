@@ -32,6 +32,7 @@ public class SerialCommunicationsController {
   private WebSocketServer webSocketServer;
 
   private static final Map<String, SerialPort> openedSerialPortMap = new ConcurrentHashMap<>();
+  private static final Map<String, String> serialMap = new ConcurrentHashMap<>();
 
   @GetMapping("view")
   public String view(Model model){
@@ -49,8 +50,17 @@ public class SerialCommunicationsController {
   }
 
   @GetMapping("start")
-  public @ResponseBody Map<String, ? extends Object> start(@RequestBody Map<String, String> serialMap){
+  public @ResponseBody Map<String, ? extends Object> start(@RequestBody String serialArray){
     Map<String, Object> result = new HashMap<String, Object>();
+
+    if(serialArray != null && serialArray.trim().length() > 0) {
+      serialMap.clear();
+      String[] messageArr = serialArray.split(";");
+      for (String s : messageArr) {
+        serialMap.put(s.split(",")[1], s.split(",")[0]);
+      }
+    }
+
     //启动所有端口前，先关闭
     if(!openedSerialPortMap.isEmpty()){
       openedSerialPortMap.forEach((serialName, serialPort) -> {

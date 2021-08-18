@@ -4,20 +4,221 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <link th:href="@{/webjars/bootstrap/3.4.1/dist/css/bootstrap.css}" rel="stylesheet"/>
+  <style>
+    .broken-line {
+      -moz-border-bottom-colors: none;
+      -moz-border-image: none;
+      -moz-border-left-colors: none;
+      -moz-border-right-colors: none;
+      -moz-border-top-colors: none;
+      border-color: #EEEEEE -moz-use-text-color #FFFFFF;
+      border-style: solid none;
+      border-width: 1px 0;
+      margin: 18px 0;
+    }
+
+    body {
+      margin: 40px;
+      font-size: 36px;
+      background-color: #181821;
+      color: #9a9cab;
+      line-height: 1.6;
+    }
+
+    .btn-circle {
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 12px;
+      line-height: 1.428571429;
+      border-radius: 15px;
+    }
+
+    .btn-circle.btn-lg {
+      width: 50px;
+      height: 50px;
+      padding: 10px 16px;
+      font-size: 18px;
+      line-height: 1.33;
+      border-radius: 25px;
+    }
+
+    .btn-circle.btn-xl {
+      width: 70px;
+      height: 70px;
+      padding: 10px 16px;
+      font-size: 24px;
+      line-height: 1.33;
+      border-radius: 35px;
+    }
+
+    .text-title {
+      color: #fad292;
+      font-size: 50px;
+    }
+
+    .text-label {
+      font-family: Arial, 微軟正黑體, 微軟雅黑體;
+      font-weight: bold;
+      font-size: 32px;
+      color: #fc9494!important;
+    }
+
+    .text-value {
+      color: #83d8ae!important;
+    }
+
+    .container-liquid {
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .select {
+
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container-fluid"><!--container-fluid-->
     <div class="row">
-      <div class="col-xs-12 col-sm-12">
-        <h2>公司名称：华为电子工程有限公司</h2>
-        <h2>型号：TX56 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;光束间距：2mm</h2>
+      <div class="col-xs-10 col-sm-10 col-md-offset-2 text-title">
+        华为电子工程有限公司
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-offset-3 text-title">
+        光幕终端
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3 col-sm-3">
+        &nbsp;
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-12 col-sm-12">
-        <h4 th:text="${title}"></h4>
-        <p>操作:<div><a onclick="openSocket()">开启socket</a></div>
-        <p>【操作】：<div><a onclick="sendMessage()">发送消息</a></div>
+      <div class="col-xs-2 col-sm-2">
+        <span class="text-label">1：</span><span class="text-value">长</span>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">尺寸：</span><span class="text-value">123456 mm</span>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">尺寸：</span><span class="text-value">123456 mm</span>
+      </div>
+      <div class="col-xs-1 col-sm-1">
+        <button type="button" class="btn btn-success btn-circle"></button>
+      </div>
+      <div class="col-xs-2 col-sm-2">
+        <span class="text-label">通光：</span><span class="text-value">100 次</span>
+      </div>
+      <div class="col-xs-1 col-sm-1">
+        <button type="button" class="btn btn-gray">归零</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-2 col-sm-2">
+        <span class="text-label">2：</span><span class="text-value">宽</span>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">尺寸：</span><span class="text-value">123456 mm</span>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">尺寸：</span><span class="text-value">123456 mm</span>
+      </div>
+      <div class="col-xs-1 col-sm-1">
+        <button type="button" class="btn btn-danger btn-circle"></button>
+      </div>
+      <div class="col-xs-2 col-sm-2">
+        <span class="text-label">通光：</span><span class="text-value">100 次</span>
+      </div>
+      <div class="col-xs-1 col-sm-1">
+        <button type="button" class="btn btn-gray">归零</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-2 col-sm-2">
+        <span class="text-label">3：</span><span class="text-value">高</span>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">尺寸：</span><span class="text-value">123456 mm</span>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">尺寸：</span><span class="text-value">123456 mm</span>
+      </div>
+      <div class="col-xs-1 col-sm-1">
+        <button type="button" class="btn btn-danger btn-circle"></button>
+      </div>
+      <div class="col-xs-2 col-sm-2">
+        <span class="text-label">通光：</span><span class="text-value">100 次</span>
+      </div>
+      <div class="col-xs-1 col-sm-1">
+        <button type="button" class="btn btn-gray">归零</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-2 col-sm-2 col-md-offset-10">
+        &nbsp;
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 col-sm-3 col-md-offset-9" style="font-size: 20px;">
+        尺寸单位：毫米
+      </div>
+    </div>
+    <hr class="broken-line"/>
+
+    <div class="row">
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">1：型号：</span><span class="text-value">XT120</span>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">间距：</span><span class="text-value">10 mm</span>
+      </div>
+      <div class="col-xs-2 col-sm-2" style="display: flex;">
+        <span class="text-label">com：</span>
+        <select class="select form-control">
+
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">2：型号：</span><span class="text-value">XT120</span>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">间距：</span><span class="text-value">10 mm</span>
+      </div>
+      <div class="col-xs-2 col-sm-2" style="display: flex;">
+        <span class="text-label">com：</span>
+        <select class="select form-control">
+
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">3：型号：</span><span class="text-value">XT120</span>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <span class="text-label">间距：</span><span class="text-value">10 mm</span>
+      </div>
+      <div class="col-xs-2 col-sm-2" style="display: flex;">
+        <span class="text-label">com：</span>
+        <select class="select form-control">
+
+        </select>
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-4">
+      <button type="button" class="btn btn-primary" onclick="start();">开启监控</button>
+        <button type="button" class="btn btn-gray" onclick="sendMessage();">结束监控</button>
       </div>
     </div>
   </div>
@@ -71,6 +272,47 @@
       socket.send(msg);
     }
   }
+
+  $(function() {
+    initComOption();
+  });
+
+  function start() {
+    let serialArray = '';
+    $.each($(".select"), function(idx, obj) {
+      serialArray = serialArray + idx + ',' + $(obj).val() + ';';
+    });
+    $.ajax({
+      type: 'GET',
+      url: 'start?serialArray= ' + serialArray +'&no=' + Math.random(),
+      cache: false,
+      success: function (data) {
+        if ("successful" === data.status) {
+          openSocket();
+        }
+      }
+    });
+  }
+
+  function initComOption(){
+    $.ajax({
+      type: 'GET',
+      url: 'list?no=' + Math.random(),
+      cache: false,
+      success: function (data) {
+        if("successful" === data.status && data.protList){
+          let html;
+          data.protList.forEach(function(com) {
+            html += '<option value="' + com + '" data-tokens="' + com + '">' + com + '</option>';
+          });
+          $.each($(".select"), function(idx, obj) {
+            $(obj).html(html);
+          });
+        }
+      }
+    });
+  }
+
 
 </script>
 </html>
