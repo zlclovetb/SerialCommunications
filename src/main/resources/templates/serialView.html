@@ -226,6 +226,9 @@
 <script th:src="@{/webjars/jquery/3.4.1/dist/jquery.js}"></script>
 <script th:src="@{/webjars/bootstrap/3.4.1/dist/js/bootstrap.js}"></script>
 <script type="application/javascript">
+  $(function() {
+    initComOption();
+  });
   let socket;
   function openSocket() {
     if (typeof (WebSocket) == "undefined") {
@@ -273,10 +276,6 @@
     }
   }
 
-  $(function() {
-    initComOption();
-  });
-
   function start() {
     let serialArray = '';
     $.each($(".select"), function(idx, obj) {
@@ -287,8 +286,10 @@
       url: 'start?serialArray= ' + serialArray +'&no=' + Math.random(),
       cache: false,
       success: function (data) {
-        if ("successful" === data.status) {
+        if ("Success" === data.status) {
           openSocket();
+        } else {
+          alert(data.message)
         }
       }
     });
@@ -300,7 +301,7 @@
       url: 'list?no=' + Math.random(),
       cache: false,
       success: function (data) {
-        if("successful" === data.status && data.protList){
+        if("Success" === data.status && data.protList){
           let html;
           data.protList.forEach(function(com) {
             html += '<option value="' + com + '" data-tokens="' + com + '">' + com + '</option>';

@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("serial")
 public class SerialCommunicationsController {
+  private static final Logger log = LoggerFactory.getLogger(SerialCommunicationsController.class);
+
   @Autowired
   private WebSocketServer webSocketServer;
 
@@ -50,14 +54,14 @@ public class SerialCommunicationsController {
   }
 
   @GetMapping("start")
-  public @ResponseBody Map<String, ? extends Object> start(@RequestBody String serialArray){
+  public @ResponseBody Map<String, ? extends Object> start(String serialArray){
     Map<String, Object> result = new HashMap<String, Object>();
 
     if(serialArray != null && serialArray.trim().length() > 0) {
       serialMap.clear();
       String[] messageArr = serialArray.split(";");
       for (String s : messageArr) {
-        serialMap.put(s.split(",")[1], s.split(",")[0]);
+        serialMap.put(s.split(",")[0], s.split(",")[1]);
       }
     }
 
@@ -70,7 +74,7 @@ public class SerialCommunicationsController {
         }
       });
     }
-    serialMap.forEach((serialName, type) -> {
+    serialMap.forEach((type, serialName) -> {
       try {
         SerialPort serialPort = SerialPortManager.openPort(serialName, 9600);
         SerialPortManager.addListener(serialPort, new SerialPortEventListener() {
@@ -82,17 +86,19 @@ public class SerialCommunicationsController {
               try {
                 bytes = SerialPortManager.readFromPort(serialPort);
                 String message = ToolUtility.byte2HexStr(bytes);
+                message = type + "," + message;
                 System.out.println("接收到数据为：" + message);
                 WebSocketServer.sendMessage(message);
               } catch (ReadDataFromSerialPortFailure | SerialPortInputStreamCloseFailure e) {
-                e.printStackTrace();
+                log.error(e.getMessage(), e);
               }
             }
           }
         });
         openedSerialPortMap.put(serialName, serialPort);
       } catch (SerialPortParameterFailure | NotASerialPort | NoSuchPort | PortInUse | TooManyListeners e) {
-        e.printStackTrace();
+        result.put("message", e.getMessage());
+        log.error(e.getMessage(), e);
       }
     });
     result.put("status", "Success");

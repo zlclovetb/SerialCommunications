@@ -29,6 +29,7 @@ public class WebSocketServer {
   @OnOpen
   public void onOpen(Session session) {
     onlineNumber.incrementAndGet(); // 在线数加1
+    sessionPools.put(session.getId(), session);
     log.info("有新连接加入：{}，当前在线人数为：{}", session.getId(), onlineNumber.get());
   }
 
@@ -49,7 +50,7 @@ public class WebSocketServer {
   @OnMessage
   public void onMessage(String message, Session session) {
     log.info("服务端收到客户端[{}]的消息:{}", session.getId(), message);
-    sendMessage("Hello, " + message, session);
+    //sendMessage("Hello, " + message, session);
   }
 
   @OnError
